@@ -25,7 +25,7 @@ exports.resetPasswordToken = async (req, res) => {
     );
     console.log("DETAILS", updatedDetails);
 
-    const url = `https://snfrontend-7lyz.onrender.com//update-password/${token}`;
+    const url = `https://snfrontend-7lyz.onrender.com/update-password/${token}`;
 
     await mailSender(
       email,
