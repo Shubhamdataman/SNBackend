@@ -23,7 +23,7 @@ exports.resetPasswordToken = async (req, res) => {
       },
       { new: true }
     );
-    console.log("DETAILS", updatedDetails);
+    // console.log("DETAILS", updatedDetails);
 
     const url = `https://snfrontend-7lyz.onrender.com/update-password/${token}`;
 
