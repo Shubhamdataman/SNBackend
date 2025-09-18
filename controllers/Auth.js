@@ -15,18 +15,16 @@ exports.googleauth = async (req, res) => {
     // Fetch access token from UI request
     const gapiresponse = req.body.gapiresponse.access_token;
 
-
     // Make a request to the Google UserInfo endpoint
     const userInfo = await axios.get(
       `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${gapiresponse}`
     );
 
     // Process user info from the response
-    
 
     // failure in case email not google varified
     const email_verified = userInfo.data.email_verified;
-  
+
     if (!email_verified) {
       return res.status(400).json({
         sucess: false,
@@ -169,7 +167,7 @@ exports.signup = async (req, res) => {
 
     // Find the most recent OTP for the email
     const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-   
+
     if (response.length === 0) {
       // OTP not found for the email
       return res.status(400).json({
@@ -314,8 +312,7 @@ exports.sendotp = async (req, res) => {
       specialChars: false,
     });
     const result = await OTP.findOne({ otp: otp });
-   
- 
+
     while (result) {
       otp = otpGenerator.generate(6, {
         upperCaseAlphabets: false,
@@ -323,7 +320,7 @@ exports.sendotp = async (req, res) => {
     }
     const otpPayload = { email, otp };
     const otpBody = await OTP.create(otpPayload);
- 
+
     res.status(200).json({
       success: true,
       message: `OTP Sent Successfully`,
@@ -373,7 +370,6 @@ exports.changePassword = async (req, res) => {
           `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
         )
       );
- 
     } catch (error) {
       // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
       console.error("Error occurred while sending email:", error);
